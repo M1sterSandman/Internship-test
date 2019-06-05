@@ -27,13 +27,6 @@ class University extends Student{
     addStudent(studentName){
         this.studentList.push(studentName);
     }
-    calculateGPA(){ //GPA - grade point average
-        let sum=0;
-        for(let i=0; i<=this.studentList.length; i++){
-            sum+=i;
-        }
-        return sum / this.studentList.length;
-    }
 }
 
 class Internship extends Student{
@@ -46,8 +39,8 @@ class Internship extends Student{
 
     }
     getStudent(){
-        let gpa = university1.calculateGPA();
-        university1.studentList.forEach((student)=>{
+        let gpa = calculateGPA();
+        commonStudentsList.forEach((student)=>{
             if(student.level>gpa){
                 this.suitableStudent.push(student.studentName);
             }
@@ -56,12 +49,35 @@ class Internship extends Student{
     }
 }
 
-let university1 = new University('CHSBC');
+let commonStudentsArrs = [];
+let commonStudentsList = [];
 
+let university1 = new University('CHSBC');
 university1.addStudent(new Student('Sasha Onoshko', '5'));
-university1.addStudent(new Student("Andrew Kostenko", '4'));
-university1.addStudent(new Student("Julia Veselkina",'3'));
-university1.addStudent(new Student("Maria Perechrest", '2'));
+university1.addStudent(new Student("Julia Veselkina",'2'));
+
+let university2 = new University('CHNU');
+university2.addStudent(new Student("Andrew Kostenko", '4'));
+university2.addStudent(new Student("Maria Perechrest", '2'));
+
+let university3 = new University('CHDTU');
+university3.addStudent(new Student("Maria Petrenko", '3'));
+university3.addStudent(new Student("Nazar Ivanov", '4'));
+
+commonStudentsArrs.push(university1.studentList, university2.studentList, university3.studentList);
+commonStudentsArrs.forEach((element)=>{
+    element.forEach((elem)=>{
+        commonStudentsList.push(elem);
+    });
+});
+
+function calculateGPA(){ //GPA - grade point average
+    let sum=0;
+    commonStudentsList.forEach((element)=>{
+        sum += parseInt(element.level);
+    });
+    return sum / commonStudentsList.length;
+}
 
 let internship = new Internship('Interlink');
 
